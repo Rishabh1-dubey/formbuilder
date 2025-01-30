@@ -22,7 +22,7 @@ model Form {
   content Json
   submissions Int @default(0)
   shareUrl String @default(uuid())
-formSubmission Submissions[]
+  formSubmission Submissions[]
 
 }
 model Submissions {
