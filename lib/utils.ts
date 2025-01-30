@@ -6,5 +6,3 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 
-const prisma = new PrismaClient()
-export default prisma
