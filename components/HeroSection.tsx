@@ -1,8 +1,12 @@
+"use client"
+import { useState } from "react";
 import GenrateInputBox from "./GenrateInputBox";
 import PricingCard from "./PricingCard";
 import { Button } from "./ui/button";
 
 const HeroSection = () => {
+
+  const [ text , setText] = useState<string>("");
   type SuggestionText = {
     label: string;
     text: string;
@@ -40,12 +44,16 @@ const HeroSection = () => {
       </div>
 
       {/* input created */}
-      <GenrateInputBox />
+      <GenrateInputBox text={text} />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 items-center mt-6 px-4">
         {suggestedBtnText.map((item: SuggestionText, idx: number) => {
           return (
-            <Button key={idx} className="rounded-full h-10 w-full sm:w-auto" variant={"outline"}>
+            <Button onClick={()=>{setText(item.text)}}
+              key={idx}
+              className="rounded-full h-10 w-full sm:w-auto"
+              variant={"outline"}
+            >
               {item.label}
             </Button>
           );
