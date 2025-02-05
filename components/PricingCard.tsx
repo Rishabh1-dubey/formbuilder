@@ -2,24 +2,24 @@ import React from "react";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { Input } from "./ui/input";
+
 import { Button } from "./ui/button";
-import { Label } from "./ui/label";
+
 import { PricingPlan, pricingPlan } from "@/lib/pricingPlan";
 import { Badge } from "./ui/badge";
-import { Outdent } from "lucide-react";
 
 const PricingCard = () => {
   return (
     <div>
       <div className="pb-12 text-center">
         <h1 className="font-bold text-2xl">Plan and Pricing</h1>
-        <p className="text-gray-600">Recieve unlimited credits when you pay early, and save your plan</p>
+        <p className="text-gray-600">
+          Recieve unlimited credits when you pay early, and save your plan
+        </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 items-center justify-items-center">
         {pricingPlan.map((item: PricingPlan, index: number) => {
