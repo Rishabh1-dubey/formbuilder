@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/ui/Logo";
 import { UserButton } from "@clerk/nextjs";
+import Link from "next/link";
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -9,7 +10,9 @@ const layout = ({ children }: { children: React.ReactNode }) => {
         <nav className="flex justify-between items-center max-w-7xl mx-auto py-6">
           <Logo />
           <div className="flex items-center gap-4">
+          <Link href="/dashboard/analytics">Home
             <Button variant={"link"}>Dashboard</Button>
+          </Link>
             <UserButton />
           </div>
         </nav>
