@@ -1,6 +1,5 @@
 "use client";
 import Analtytics from "@/components/Analtytics";
-import { useRouter } from "next/navigation";
 const page = () => {
  
   return (
