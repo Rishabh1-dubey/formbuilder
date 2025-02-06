@@ -33,7 +33,6 @@ const GenrateInputBox: React.FC<{ text?: string }> = ({ text }) => {
 
   useEffect(() => {
     if (state.success) {
-      console.log(state.data);
       toast(state.message);
       router.push(`/dashboard/forms/edit/${state.data.id}`);
     } else if (state.message) {
