@@ -1,18 +1,28 @@
-"use client";
 import Analtytics from "@/components/Analtytics";
-const page = () => {
+import prisma from "@/lib/prisma";
+import { currentUser } from "@clerk/nextjs/server";
+import React from "react";
+
+
+
+const page = async() => {
  
+  const user = await currentUser()
+  const res = await prisma.form.aggregate({
+    where:{
+      ownerId:user?.id as string
+    },
+    _sum:{
+      submissions:true
+    }
+  })
+  const numberOfSubmissions = res._sum.submissions || 0
   return (
     <div>
-    <div className="grid grid-cols-[200px_minmax(900px,_1fr)_100px] ">
-     
-     <div>
-      <Analtytics />
-      </div>
-    <div className="py-2 px-4">edit section</div>
+      <Analtytics noOfSubmissions ={numberOfSubmissions} />
     </div>
 
-  </div>
+ 
   );
 };
 
