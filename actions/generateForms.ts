@@ -31,8 +31,23 @@ export const generateFroms = async (prevState: unknown, formData: FormData) => {
 
     const description = result.data.description;
 
-    const prompt =
-      " Create a json form with the following fields: title , fields( if any fields includes options then keep inside array and not object) , button  only 3 fileds inside the content object, don't add any other nested object";
+    const prompt = `Generate a JSON response for a form with the following structure. Ensure the keys and format remain constant in every response.
+{
+  "formTitle": "string", // The title of the form
+  "formFields": [        // An array of fields in the form
+    {
+      "label": "string", // The label to display for the field
+      "name": "string",  // The unique identifier for the field (used for form submissions)
+      "placeholder": "string" // The placeholder text for the field
+    }
+  ]
+}
+Requirements:
+- Use only the given keys: "formTitle", "formFields", "label", "name", "placeholder".
+- Always include at least 3 fields in the "formFields" array.
+- Keep the field names consistent across every generation for reliable rendering.
+- Provide meaningful placeholder text for each field based on its label.
+        `;
     // Request gemini or deepseek ai to generate the form content
 
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API);
@@ -43,7 +58,7 @@ export const generateFroms = async (prevState: unknown, formData: FormData) => {
     //storing in another variable
     const formContent =
       resultgemni.response.candidates?.[0]?.content?.parts?.[0]?.text;
-    
+
     if (!formContent) {
       return { success: false, message: "Ai is not able to genrate the form" };
     }
@@ -51,7 +66,7 @@ export const generateFroms = async (prevState: unknown, formData: FormData) => {
     //Clean the response to remove Markdown syntax
 
     const cleanFormContent = formContent.replace(/```json|```/g, "").trim();
-   
+
     let jsonFormData;
     try {
       if (typeof cleanFormContent === "string") {
@@ -83,7 +98,7 @@ export const generateFroms = async (prevState: unknown, formData: FormData) => {
       revalidatePath("/dashboard/forms"); //optionally revalidate a path if necessary
 
       return {
-        success: true,  
+        success: true,
         message: "Form generated Successfully",
         data: form,
       };
