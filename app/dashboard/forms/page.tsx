@@ -9,10 +9,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Form } from "@/types/form";
 
 const MyForm = async () => {
   const forms : any = await getForm();
-  console.log(forms);
+  console.log(" for checking the data",forms);
 
   return (
     <div className="">

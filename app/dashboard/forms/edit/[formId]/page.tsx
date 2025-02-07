@@ -23,7 +23,7 @@ const editPage = async ({
     <Card>
       <CardHeader>
         <CardTitle>
-          <h1 className="text-2xl text-center">{form.content?.title}</h1>
+          <h1 className="text-2xl text-center">{form.content?.formTitle}</h1>
         </CardTitle>
       </CardHeader>
       <CardContent>
