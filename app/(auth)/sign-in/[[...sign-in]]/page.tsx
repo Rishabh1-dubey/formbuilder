@@ -1,11 +1,16 @@
  "use client"
- import { SignIn } from "@clerk/nextjs"
+ import { SignIn, useUser } from "@clerk/nextjs"
 const page = () => {
-  return (
-    <div className="flex items-center justify-center mt-24">
-        <SignIn/>
-    </div>
-  )
-}
 
+
+  const {user} = useUser()
+  if (!user) {
+    return (
+      <div className="flex items-center justify-center mt-24">
+        <SignIn />
+      </div>
+    );
+  };
+
+}
 export default page
