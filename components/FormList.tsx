@@ -12,6 +12,7 @@ import Link from "next/link";
 import { Edit2 } from "lucide-react";
 import deleteForm from "@/actions/deleteForm";
 import toast from "react-hot-toast";
+import { Form } from "@/types/form";
 
 type Props = {
   form: Form;
@@ -28,12 +29,12 @@ export const FromList: React.FC<Props> = ({ form }) => {
       toast.error(data.message);
     }
   };
-
+console.log("form list ka data pront kr rha huu  ",form)
   return (
     <div>
       <Card className="w-[350px]">
         <CardHeader>
-          <CardTitle>{form.content.title}</CardTitle>
+          <CardTitle>{form.content.formTitle}</CardTitle>
           <CardDescription>
             Deploy your new Project in one click{" "}
           </CardDescription>

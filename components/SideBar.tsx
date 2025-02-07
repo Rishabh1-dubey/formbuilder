@@ -1,3 +1,5 @@
+
+"use client"
 import React, { JSX } from "react";
 import {
   Sidebar,
@@ -14,7 +16,6 @@ import {
 import { ChartSpline, ClipboardList } from "lucide-react";
 import { Separator } from "./ui/separator";
 import Link from "next/link";
-import { currentUser } from "@clerk/nextjs/server";
 import Logo from "./ui/Logo";
 
 type MenuItems = {
