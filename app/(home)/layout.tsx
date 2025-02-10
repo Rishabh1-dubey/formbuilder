@@ -1,3 +1,4 @@
+import {DarkMode} from "@/components/DarkMode";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/ui/Logo";
 import { UserButton } from "@clerk/nextjs";
@@ -13,7 +14,8 @@ const layout = ({ children }: { children: React.ReactNode }) => {
           <Link href="/dashboard/analytics">Home
             <Button variant={"link"}>Dashboard</Button>
           </Link>
-            <UserButton />
+            <UserButton  afterSignOutUrl="/sign-in"/>
+            <DarkMode/>
           </div>
         </nav>
       </div>
