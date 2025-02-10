@@ -32,6 +32,7 @@ export const FromList: React.FC<Props> = ({ form }) => {
 console.log("form list ka data pront kr rha huu  ",form)
   return (
     <div>
+     
       <Card className="w-[350px]">
         <CardHeader>
           <CardTitle>{form.content.formTitle}</CardTitle>
@@ -42,7 +43,7 @@ console.log("form list ka data pront kr rha huu  ",form)
         <CardContent>
           <Link href={`/dashboard/forms/${form.id}/submissions`}>
             {""}
-            <Button variant={"link"} className="text-black hover:text-blue-600">
+            <Button variant={"link"} className="text-black hover:text-blue-600 dark:text-white">
               Submission - {form.submissions}{" "}
             </Button>
           </Link>
@@ -56,6 +57,7 @@ console.log("form list ka data pront kr rha huu  ",form)
           </Button>
         </CardFooter>
       </Card>
+     
     </div>
   );
 };
