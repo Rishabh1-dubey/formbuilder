@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Card,
@@ -11,8 +12,67 @@ import { Button } from "./ui/button";
 
 import { PricingPlan, pricingPlan } from "@/lib/pricingPlan";
 import { Badge } from "./ui/badge";
+import { useRouter } from "next/navigation";
+import { getRazorpay } from "@/lib/getRozerpay";
 
-const PricingCard = () => {
+type Props = {
+  userId: string | undefined;
+};
+
+const PricingCard: React.FC<Props> = ({ userId }) => {
+  const router = useRouter();
+
+  const checkoutHandler = async (price: number, plan: string) => {
+    if (!userId) {
+      router.push("/sign-in");
+      return;
+    }
+    if (price === 0) {
+      return;
+    }
+
+    try {
+      const { sessionId } = await fetch("/api/razorpay/checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ price, userId, plan }),
+      }).then((res) => res.json());
+
+      console.log("API response:", sessionId);
+
+      const rozorpay = await getRazorpay();
+      if(!rozorpay){
+        console.error("Failed to load Razorpay SDK")
+        return;
+      }
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!, // Use your Razorpay key
+        amount: price * 100, // Convert price to paise
+        currency: "INR",
+        name: "Your Company Name",
+        description: "Subscription Payment",
+        order_id: sessionId, // Order ID from your backend
+        handler: function (response: any) {
+          console.log("Payment successful", response);
+          // Handle post-payment success logic here (e.g., updating the backend)
+        },
+        prefill: {
+          email: "user@example.com", // Prefill user email if available
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      const rzp = new rozorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.log(error, "message got not wrong ");
+    }
+  };
+
   return (
     <div>
       <div className="pb-12 text-center">
@@ -65,6 +125,16 @@ const PricingCard = () => {
                       ? "bg-white text-black font-medium"
                       : null
                   }  w-full`}
+                  onClick={() =>
+                    checkoutHandler(
+                      item.level === "Pro"
+                        ? 15
+                        : item.level === "Enterprise"
+                        ? 40
+                        : 0,
+                      item.level
+                    )
+                  }
                 >
                   Start With {item.level}
                 </Button>

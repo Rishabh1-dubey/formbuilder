@@ -13,11 +13,15 @@ import { Edit2 } from "lucide-react";
 import deleteForm from "@/actions/deleteForm";
 import toast from "react-hot-toast";
 import { Form } from "@/types/form";
+import { useRouter } from "next/navigation";
 
 type Props = {
   form: Form;
 };
 export const FromList: React.FC<Props> = ({ form }) => {
+
+  const router = useRouter()
+
   console.log(form);
 
   const deleteHandle = async (formId: number) => {
@@ -49,7 +53,7 @@ console.log("form list ka data pront kr rha huu  ",form)
           </Link>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Button variant="outline">
+          <Button variant="outline" onClick={()=>router.push(`/dashboard/forms/edit/${form.id}`)}>
             <Edit2 /> Edit
           </Button>
           <Button onClick={() => deleteHandle(form.id)} variant={"destructive"}>

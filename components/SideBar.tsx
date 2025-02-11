@@ -1,5 +1,5 @@
 
-"use client"
+
 import React, { JSX } from "react";
 import {
   Sidebar,
@@ -17,6 +17,8 @@ import { ChartSpline, ClipboardList } from "lucide-react";
 import { Separator } from "./ui/separator";
 import Link from "next/link";
 import Logo from "./ui/Logo";
+import UpgradeButton from "./UpgradedButton";
+import { currentUser } from "@clerk/nextjs/server";
 
 type MenuItems = {
   title: string;
@@ -37,7 +39,10 @@ const items: MenuItems[] = [
   },
 ];
 
+
+
 const DashboardSidebar = async () => {
+  const user = await currentUser()
 
   return (
     <Sidebar>
@@ -66,7 +71,7 @@ const DashboardSidebar = async () => {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        
+        <UpgradeButton userId={user?.id}/>
       </SidebarFooter>
     </Sidebar>
   );
