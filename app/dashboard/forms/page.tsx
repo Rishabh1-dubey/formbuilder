@@ -1,5 +1,6 @@
 import { getForm } from "@/actions/getForm";
 import { FromList } from "@/components/FormList";
+import GenrateInputBox from "@/components/GenrateInputBox";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,6 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Form } from "@/types/form";
+import { Plus } from "lucide-react";
 
 const MyForm = async () => {
   const forms : any = await getForm();
@@ -22,7 +24,9 @@ const MyForm = async () => {
           <h1 className="font-bold text-xl">My Forms</h1>
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline"></Button>
+              <Button variant="outline">
+                <Plus/>Create New Form
+              </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w[425px]">
               <DialogHeader>
@@ -32,6 +36,7 @@ const MyForm = async () => {
                   Write a clean prompt to get better results
                 </DialogDescription>
               </DialogHeader>
+              <GenrateInputBox/>
             </DialogContent>
           </Dialog>
         </section>

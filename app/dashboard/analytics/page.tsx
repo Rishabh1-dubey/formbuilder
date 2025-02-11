@@ -8,6 +8,7 @@ const page = async () => {
   return (
     <div>
       <Analtytics noOfSubmissions={data || 0} />
+      
     </div>
   );
 };
