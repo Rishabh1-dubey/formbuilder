@@ -9,26 +9,34 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
 model Form {
-  id Int @id @default(autoincrement())
-  ownerId String
-  createdAt DateTime @default(now())
-  publishedAt Boolean @default(false)
-  content Json
-  submissions Int @default(0)
-  shareUrl String @default(uuid())
+  id             Int           @id @default(autoincrement())
+  ownerId        String
+  createdAt      DateTime      @default(now())
+  publishedAt    Boolean       @default(false)
+  content        Json
+  submissions    Int           @default(0)
+  shareUrl       String        @default(uuid())
   formSubmission Submissions[]
-
 }
+
 model Submissions {
-  id Int @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  formId Int
-  form Form @relation(fields: [formId],references: [id])
-  content Json
+  formId    Int
+  form      Form     @relation(fields: [formId], references: [id])
+  content   Json
+}
+
+model Subscriptions {
+  id        Int @id @default(autoincrement())
+  userId     String
+  subscribed Boolean
+  createdAt DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
