@@ -1,3 +1,4 @@
+"use client"
 import {DarkMode} from "@/components/DarkMode";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/ui/Logo";
