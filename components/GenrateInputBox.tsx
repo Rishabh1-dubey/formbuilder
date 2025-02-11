@@ -1,5 +1,5 @@
 "use client"
-import { Sparkle } from "lucide-react";
+import { Lock ,Sparkle } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useFormStatus } from "react-dom";
@@ -7,6 +7,7 @@ import React, { ChangeEvent, useActionState, useEffect, useState } from "react";
 import { generateFroms } from "@/actions/generateForms";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { MAX_FREE_FORM_TOKEN } from "@/lib/utils";
 
 type InitialState = {
   message: string;
@@ -19,7 +20,13 @@ const initalState: InitialState = {
   success: false,
 };
 
-const GenrateInputBox: React.FC<{ text?: string }> = ({ text }) => {
+type Props = {
+  text?:string,
+  totalForms? :number,
+  isSubscribed?:boolean
+}
+
+const GenrateInputBox: React.FC<Props> = ({ text,totalForms ,isSubscribed}) => {
   const [description, setDescription] = useState<string | undefined>(text);
   const [state, formAction] = useActionState(generateFroms, initalState);
   const router = useRouter();
@@ -51,7 +58,13 @@ const GenrateInputBox: React.FC<{ text?: string }> = ({ text }) => {
           type="text"
           placeholder="Write a Prompt to Generate Forms....."
         />
-        <SubmitButton />
+
+
+        {
+          isSubscribed || totalForms! <= MAX_FREE_FORM_TOKEN ? <SubmitButton/> : <Button disabled className="h-12">
+          <Lock/>  Upgrade Plan</Button>
+        }
+        
       </div>
     </form>
   );
@@ -68,7 +81,7 @@ const SubmitButton = () => {
       className="h-12  bg-gradient-to-r from-blue-500 to bg-purple-700"
     >
       <Sparkle className="mr-2" />
-      {pending ? <span>Generating forms .......</span> : " Generate forms"}
+      {pending ? <span>Generating forms ....</span> : " Generate forms"}
     </Button>
   );
 };

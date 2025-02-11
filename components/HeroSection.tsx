@@ -1,10 +1,16 @@
 "use client"
-import { useState } from "react";
+import React, { useState } from "react";
 import GenrateInputBox from "./GenrateInputBox";
-import PricingCard from "./PricingCard";
 import { Button } from "./ui/button";
+import { boolean, string } from "zod";
 
-const HeroSection = () => {
+
+
+type Props= {
+  totalForms:number;
+  isSubscribed : boolean
+}
+const HeroSection:React.FC<Props> = async({totalForms, isSubscribed}) => {
 
   const [ text , setText] = useState<string>("");
   type SuggestionText = {
@@ -44,7 +50,7 @@ const HeroSection = () => {
       </div>
 
       {/* input created */}
-      <GenrateInputBox text={text} />
+      <GenrateInputBox text={text} totalForms ={totalForms} isSubscribed ={isSubscribed} />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 items-center mt-6 px-4">
         {suggestedBtnText.map((item: SuggestionText, idx: number) => {
