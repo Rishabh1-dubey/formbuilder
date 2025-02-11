@@ -6,3 +6,5 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 
+
+ export const MAX_FREE_FORM_TOKEN = 3
