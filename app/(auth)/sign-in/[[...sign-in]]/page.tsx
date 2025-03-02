@@ -1,6 +1,6 @@
  "use client"
  import { SignIn, useUser } from "@clerk/nextjs"
-const page = () => {
+const Page = () => {
 
 
   const {user} = useUser()
@@ -13,4 +13,4 @@ const page = () => {
   };
 
 }
-export default page
+export default Page
