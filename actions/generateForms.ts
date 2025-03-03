@@ -75,7 +75,7 @@ Requirements:
         jsonFormData = cleanFormContent ? cleanFormContent : null; // Already an object
       }
     } catch (error) {
-      console.log("Error Json parse", error, cleanFormContent);
+      console.log(error)
       return {
         success: false,
         message: "Genrated form content is not valid JSON",
@@ -85,7 +85,7 @@ Requirements:
     //store the data into the json form
     //save the generated form to the database
 
-    console.log("jsonFormData:", jsonFormData);
+   
     // here i have to debug date 4/2/25
     try {
       const form = await prisma.form.create({
@@ -103,14 +103,14 @@ Requirements:
         data: form,
       };
     } catch (error) {
-      console.log("Error saving form to database", error);
+    console.log(error)
       return {
         success: false,
         message: "Failed to save form to database",
       };
     }
   } catch (error) {
-    console.log("Error generated form", error);
+  console.log(error)
     return {
       success: false,
       message: "An Error Occured while generating the form",

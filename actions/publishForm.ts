@@ -36,7 +36,7 @@ const publishform = async (formId: number) => {
     });
   } catch (error) {
     console.log(error)
-  }
 };
+}
 
 export default publishform;
