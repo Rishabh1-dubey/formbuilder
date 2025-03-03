@@ -2,15 +2,13 @@
 import React, { useState } from "react";
 import GenrateInputBox from "./GenrateInputBox";
 import { Button } from "./ui/button";
-import { boolean, string } from "zod";
-
 
 
 type Props= {
   totalForms:number;
   isSubscribed : boolean
 }
-const HeroSection:React.FC<Props> = async({totalForms, isSubscribed}) => {
+const HeroSection:React.FC<Props> = ({totalForms, isSubscribed}) => {
 
   const [ text , setText] = useState<string>("");
   type SuggestionText = {

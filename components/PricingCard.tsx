@@ -40,9 +40,9 @@ const PricingCard: React.FC<Props> = ({ userId }) => {
         body: JSON.stringify({ price, userId, plan }),
       }).then((res) => res.json());
 
-      console.log("API response:", sessionId);
+      
 
-      const rozorpay = await getRazorpay();
+      const rozorpay:any = await getRazorpay();
       if(!rozorpay){
         console.error("Failed to load Razorpay SDK")
         return;
@@ -54,8 +54,8 @@ const PricingCard: React.FC<Props> = ({ userId }) => {
         name: "Your Company Name",
         description: "Subscription Payment",
         order_id: sessionId, // Order ID from your backend
-        handler: function (response: any) {
-          console.log("Payment successful", response);
+        handler: function () {
+          
           // Handle post-payment success logic here (e.g., updating the backend)
         },
         prefill: {
@@ -69,7 +69,7 @@ const PricingCard: React.FC<Props> = ({ userId }) => {
       const rzp = new rozorpay(options);
       rzp.open();
     } catch (error) {
-      console.log(error, "message got not wrong ");
+     console.log(error)
     }
   };
 

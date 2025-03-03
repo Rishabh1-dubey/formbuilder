@@ -4,7 +4,7 @@ import { Progress } from "./ui/progress";
 
 import {  MAX_FREE_FORM_TOKEN } from "@/lib/utils";
 
-import { getForm } from "@/actions/getForm";
+import { getForms } from "@/actions/getForm";
 import { getUserSubscription } from "@/actions/getUserSubscription";
 
 
@@ -13,7 +13,7 @@ type Props = {
 }
 
 const UpgradeButton : React.FC<Props> = async ({userId}) => {
-  const forms = await getForm(); 
+  const forms = await getForms(); 
   const isSubscribed = await getUserSubscription(userId!)
 
   const formsGenerated = forms?.data?.length;

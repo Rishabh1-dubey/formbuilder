@@ -55,13 +55,13 @@ const AiGenratedform: React.FC<Props> = ({ form, isEditMode }) => {
   }
 
   
-  console.log(" ai generation ", form);
+
   
   return (
     <div>
       <form onSubmit={isEditMode ? handlePublish : handleSubmit}>
         {data.map((item: Fields, index: number) => {
-          // console.log("Field:", item); // Debugging line
+        
           return (
             <div key={index} className="mb-4">
               <Label>{item.label}</Label>

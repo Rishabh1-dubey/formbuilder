@@ -22,7 +22,7 @@ export const FromList: React.FC<Props> = ({ form }) => {
 
   const router = useRouter()
 
-  console.log(form);
+
 
   const deleteHandle = async (formId: number) => {
     const data = await deleteForm(formId);
@@ -33,7 +33,7 @@ export const FromList: React.FC<Props> = ({ form }) => {
       toast.error(data.message);
     }
   };
-console.log("form list ka data pront kr rha huu  ",form)
+
   return (
     <div>
      
