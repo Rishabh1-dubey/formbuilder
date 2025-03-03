@@ -1,4 +1,4 @@
-import { getForm } from "@/actions/getForm";
+import { getForms } from "@/actions/getForm";
 import { FromList } from "@/components/FormList";
 import GenrateInputBox from "@/components/GenrateInputBox";
 import { Button } from "@/components/ui/button";
@@ -14,8 +14,8 @@ import { Form } from "@/types/form";
 import { Plus } from "lucide-react";
 
 const MyForm = async () => {
-  const forms : any = await getForm();
-  console.log(" for checking the data",forms);
+  const forms : any = await getForms();
+  
 
   return (
     <div className="">
