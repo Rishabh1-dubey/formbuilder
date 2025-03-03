@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
         plan: `You are choosing ${plan} plan`, // Optional: Add plan details
       },
     });
-    console.log(session)
+    
     return NextResponse.json(
       {
         sessionId: session.id,

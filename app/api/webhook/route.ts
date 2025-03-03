@@ -1,47 +1,45 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method Not Allowed" });
+export async function POST(req: NextRequest) {
+  try {
+    const body = await req.text(); // Use `req.text()` instead of `req.body` in App Router
+    const webhookSecret = process.env.RAZORPAY_KEY_WEBHOOK!;
+    const razorpaySignature = req.headers.get("x-razorpay-signature") || "";
+
+    // Validate webhook signature
+    const expectedSignature = crypto
+      .createHmac("sha256", webhookSecret)
+      .update(body)
+      .digest("hex");
+
+    if (expectedSignature !== razorpaySignature) {
+      return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
+    }
+
+    const jsonBody = JSON.parse(body); // Parse the JSON body
+    const event = jsonBody.event;
+
+    switch (event) {
+      case "payment.captured":
+        // ✅ Store payment details in the database
+        break;
+
+      case "payment.failed":
+        // ✅ Handle failed payments (e.g., notify user)
+        break;
+
+      case "order.paid":
+        // ✅ Update order status in the database
+        break;
+
+      default:
+        return NextResponse.json({ error: "Unhandled event" }, { status: 400 });
+    }
+
+    return NextResponse.json({ success: true }, { status: 200 });
+  } catch (error) {
+    console.log(error)
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
-
-  // Razorpay signature verification
-  const webhookSecret = process.env.RAZORPAY_KEY_WEBHOOK!;
-  const razorpaySignature = req.headers["x-razorpay-signature"] as string;
-  const body = JSON.stringify(req.body);
-
-  const expectedSignature = crypto
-    .createHmac("sha256", webhookSecret)
-    .update(body)
-    .digest("hex");
-
-  if (expectedSignature !== razorpaySignature) {
-    return res.status(400).json({ error: "Invalid signature" });
-  }
-
-  const event = req.body.event;
-  const payload = req.body.payload;
-
-  switch (event) {
-    case "payment.captured":
-      console.log("Payment Captured:", payload.payment.entity);
-      // ✅ Store payment details in your database here
-      break;
-
-    case "payment.failed":
-      console.log("Payment Failed:", payload.payment.entity);
-      // ✅ Handle failed payments (e.g., notify user)
-      break;
-
-    case "order.paid":
-      console.log("Order Paid:", payload.order.entity);
-      // ✅ Update order status in your database
-      break;
-
-    default:
-      console.log("Unhandled event:", event);
-  }
-
-  return res.status(200).json({ success: true });
 }
