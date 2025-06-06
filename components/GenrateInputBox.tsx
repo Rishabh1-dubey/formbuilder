@@ -1,5 +1,5 @@
 "use client"
-import { Lock ,Sparkle } from "lucide-react";
+import { Lock, Sparkle } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useFormStatus } from "react-dom";
@@ -8,6 +8,8 @@ import { generateFroms } from "@/actions/generateForms";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { MAX_FREE_FORM_TOKEN } from "@/lib/utils";
+import { SignedIn, useUser } from "@clerk/nextjs";
+
 
 type InitialState = {
   message: string;
@@ -21,12 +23,12 @@ const initalState: InitialState = {
 };
 
 type Props = {
-  text?:string,
-  totalForms? :number,
-  isSubscribed?:boolean
+  text?: string,
+  totalForms?: number,
+  isSubscribed?: boolean
 }
 
-const GenrateInputBox: React.FC<Props> = ({ text,totalForms ,isSubscribed}) => {
+const GenrateInputBox: React.FC<Props> = ({ text, totalForms, isSubscribed }) => {
   const [description, setDescription] = useState<string | undefined>(text);
   const [state, formAction] = useActionState(generateFroms, initalState);
   const router = useRouter();
@@ -45,7 +47,7 @@ const GenrateInputBox: React.FC<Props> = ({ text,totalForms ,isSubscribed}) => {
     } else if (state.message) {
       toast.error(state.message);
     }
-  }, [router,state]);
+  }, [router, state]);
 
   return (
     <form action={formAction}>
@@ -59,12 +61,16 @@ const GenrateInputBox: React.FC<Props> = ({ text,totalForms ,isSubscribed}) => {
           placeholder="Write a Prompt to Generate Forms....."
         />
 
-
         {
-          isSubscribed || totalForms! <= MAX_FREE_FORM_TOKEN ? <SubmitButton/> : <Button disabled className="h-12">
-          <Lock/>  Upgrade Plan</Button>
+          !SignedIn ? (
+            <Button disabled className="h-12"><Lock /> Login </Button>
+          ) : isSubscribed || (totalForms! < MAX_FREE_FORM_TOKEN) ? (
+            <SubmitButton />
+          ) : (<Button disabled className="h-12">
+            <Lock />Upgrade Plan
+          </Button>)
         }
-        
+
       </div>
     </form>
   );
