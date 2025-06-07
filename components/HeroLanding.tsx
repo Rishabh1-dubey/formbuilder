@@ -21,7 +21,8 @@ const HeroLanding = () => {
 
     }
     return (
-        <div><div className=' flex flex-col items-center text-center -mt-24 mb-8'>
+        <div>
+            <div className=' flex flex-col items-center text-center -mt-24 mb-8'>
             <h1 className="  text-4xl font-bold tracking-tighter md:text-4xl lg:text-6xl ">
                 Create an Online  <br></br> Forms <AuroraText>In Minutes</AuroraText>
             </h1>
@@ -34,8 +35,8 @@ const HeroLanding = () => {
                 <h2 >Get notified when we lauch and get freely access 👋🏻</h2>
                 <div className=' mb-16'>
                     <form onSubmit={handleClick} className='flex flex-col md:flex-row  gap-3 items-center   '>
-                        <Input value={email} onChange={handleEmailChange} type="email" placeholder="Enter your Email" className="border border-gray-300 p-2 w-full  text-center px-20 md:px-0" />
-                        <Button type='submit' className='bg-gradient-to-r to-blue-200 to bg-purple-800 '><span className='text-white font-semibold tracking-wider px-36 md:px-0 dark:text-black'>join the waitlist ✨</span></Button>
+                        <Input value={email} onChange={handleEmailChange} type="email" placeholder="Enter your Email" className="border border-gray-300 p-2 w-full  text-center md:px-0" />
+                        <Button type='submit' className='bg-gradient-to-r to-blue-200 to bg-purple-800 '><span className='text-white font-semibold tracking-wider px-32 md:px-0 dark:text-black'>join the waitlist ✨</span></Button>
                     </form>
                 </div>
             </div>
