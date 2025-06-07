@@ -8,10 +8,12 @@ import Link from 'next/link'
 import React from 'react'
 import HeroSection from '@/components/HeroSection'
 import GenrateInputBox from '@/components/GenrateInputBox'
+import Footer from '@/components/Footer'
+import CalltoAction from '@/components/CalltoAction'
 
 const page = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div>
+    <div className='h-[1450px]'>
 
       {/* navbar section ----------------------- */}
       <div className="border border-b">
@@ -25,12 +27,12 @@ const page = ({ children }: { children: React.ReactNode }) => {
       </div>
       {/* navbar end--------------------------- */}
 
-      <div className=' absolute top-0 z-[-2] h-screen w-screen dark:bg-black bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]'>
-
+      <div className=' absolute top-0 z-[-2] h-screen w-full dark:bg-black bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]'>
 
         <AnimatedShinyText />
         <MainLandingPage />
-        <GenrateInputBox />
+        <CalltoAction />
+        {/* <Footer/> */}
 
       </div>
 
