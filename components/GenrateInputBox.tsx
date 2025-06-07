@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { MAX_FREE_FORM_TOKEN } from "@/lib/utils";
 import { SignedIn, useUser } from "@clerk/nextjs";
-
+import Link from "next/link";
 
 type InitialState = {
   message: string;
@@ -29,6 +29,7 @@ type Props = {
 }
 
 const GenrateInputBox: React.FC<Props> = ({ text, totalForms, isSubscribed }) => {
+  const { isSignedIn } = useUser();
   const [description, setDescription] = useState<string | undefined>(text);
   const [state, formAction] = useActionState(generateFroms, initalState);
   const router = useRouter();
@@ -62,8 +63,8 @@ const GenrateInputBox: React.FC<Props> = ({ text, totalForms, isSubscribed }) =>
         />
 
         {
-          !SignedIn ? (
-            <Button disabled className="h-12"><Lock /> Login </Button>
+          !isSignedIn ? (
+          <Link href="/sign-in">  <Button disabled className="h-12"><Lock /> Login </Button></Link>
           ) : isSubscribed || (totalForms! < MAX_FREE_FORM_TOKEN) ? (
             <SubmitButton />
           ) : (<Button disabled className="h-12">
