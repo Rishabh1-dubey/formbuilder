@@ -10,17 +10,18 @@ const TemplateCalltoAction = () => {
         },
         {
             title: "More then 5+",
-            description: "Templates ready to be improted",
+            description: "Templates ready to be imported",
             icon:<File size={32} /> // Represents editing or customization
         },
         {
             title: "Up to 5K",
-            description: "Integration avialable",
+            description: "Integration available",
             icon: <Link2 size={32} />
         },
     ];
 
   return (
+
    <div className="w-7/12  bg-blue-200 h-full rounded-xl py-12 mx-auto ">                   
     <div className="flex flex-col md:flex-row items-center justify-around mx-6 gap-6">        
         {Data.map((data, index) => (
@@ -34,6 +35,7 @@ const TemplateCalltoAction = () => {
         ))}                  
     </div>         
 </div>
+           
   )
 }
 

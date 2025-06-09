@@ -13,7 +13,7 @@ import { Button } from "./ui/button";
 import { PricingPlan, pricingPlan } from "@/lib/pricingPlan";
 import { Badge } from "./ui/badge";
 import { useRouter } from "next/navigation";
-import { getRazorpay } from "@/lib/getRozerpay";
+import { getStripe } from "@/lib/stripe-client";
 
 type Props = {
   userId: string | undefined;
@@ -32,7 +32,7 @@ const PricingCard: React.FC<Props> = ({ userId }) => {
     }
 
     try {
-      const { sessionId } = await fetch("/api/razorpay/checkout-session", {
+      const { sessionId } = await fetch("/api/stripe/checkout-session", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,36 +40,15 @@ const PricingCard: React.FC<Props> = ({ userId }) => {
         body: JSON.stringify({ price, userId, plan }),
       }).then((res) => res.json());
 
-      
 
-      const rozorpay:any = await getRazorpay();
-      if(!rozorpay){
-        console.error("Failed to load Razorpay SDK")
-        return;
-      }
-      const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!, // Use your Razorpay key
-        amount: price * 100, // Convert price to paise
-        currency: "INR",
-        name: "Your Company Name",
-        description: "Subscription Payment",
-        order_id: sessionId, // Order ID from your backend
-        handler: function () {
-          
-          // Handle post-payment success logic here (e.g., updating the backend)
-        },
-        prefill: {
-          email: "user@example.com", // Prefill user email if available
-        },
-        theme: {
-          color: "#3399cc",
-        },
-      };
 
-      const rzp = new rozorpay(options);
-      rzp.open();
+
+      const stripe = await getStripe();
+
+console.log("session id", sessionId)
+      stripe?.redirectToCheckout({ sessionId });
     } catch (error) {
-     console.log(error)
+      console.log(error);
     }
   };
 
@@ -86,9 +65,8 @@ const PricingCard: React.FC<Props> = ({ userId }) => {
           return (
             <Card
               key={index}
-              className={`${
-                item.level === "Enterprise" ? "bg-black text-white" : null
-              } sm:w-[350px] w-full  h-full flex flex-col cursor-pointer`}
+              className={`${item.level === "Enterprise" ? "bg-black text-white" : null
+                } sm:w-[350px] w-full  h-full flex flex-col cursor-pointer`}
             >
               <CardHeader className="flex items-center gap-2 flex-row">
                 <CardTitle className="text-lg sm:text-xl lg:text-2xl">
@@ -120,18 +98,17 @@ const PricingCard: React.FC<Props> = ({ userId }) => {
               <CardFooter className="">
                 <Button
                   variant={"outline"}
-                  className={`${
-                    item.level === "Enterprise"
-                      ? "bg-white text-black font-medium"
-                      : null
-                  }  w-full`}
+                  className={`${item.level === "Enterprise"
+                    ? "bg-white text-black font-medium"
+                    : null
+                    }  w-full`}
                   onClick={() =>
                     checkoutHandler(
                       item.level === "Pro"
                         ? 15
                         : item.level === "Enterprise"
-                        ? 40
-                        : 0,
+                          ? 40
+                          : 0,
                       item.level
                     )
                   }

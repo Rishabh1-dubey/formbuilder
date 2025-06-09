@@ -28,9 +28,9 @@ const HowItwork = () => {
 
                 <div className='flex  flex-col md:flex-row  justify-around mt-6'>
                     {
-                        Data.map((data) => (
+                        Data.map((data,index) => (
 
-                            <div className=' flex-col gap-6 w-[370px]  py-4 pl-4 '>
+                            <div key={index}  className=' flex-col gap-6 w-[370px]  py-4 pl-4 '>
                                 <p className='mb-4 text-blue-400'>{data.icon}</p>
                                 <h1 className='font-bold mb-4 text-xl'>{data.title}</h1>
                                 <p className='text-gray-600'>{data.description}</p>

@@ -4,7 +4,7 @@ import TemplateCalltoAction from './TemplateCalltoAction'
 
 const CalltoAction = () => {
   return (
-    <div>
+    <div className=''>
       <div className=' flex flex-col items-center text-center  mt-16 max-w-prose mx-auto mb-8'>
                   <h1 className="  text-4xl font-bold tracking-tighter md:text-4xl lg:text-4xl ">
                       Save <span className='text-pink-700'>Devlopment</span> time,  <br></br> Focus on your business

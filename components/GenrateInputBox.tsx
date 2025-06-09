@@ -63,13 +63,8 @@ const GenrateInputBox: React.FC<Props> = ({ text, totalForms, isSubscribed }) =>
         />
 
         {
-          !isSignedIn ? (
-          <Link href="/sign-in">  <Button disabled className="h-12"><Lock /> Login </Button></Link>
-          ) : isSubscribed || (totalForms! < MAX_FREE_FORM_TOKEN) ? (
-            <SubmitButton />
-          ) : (<Button disabled className="h-12">
-            <Lock />Upgrade Plan
-          </Button>)
+          !isSubscribed || totalForms! <= MAX_FREE_FORM_TOKEN ? <SubmitButton /> :
+            <Button disabled className="h-12"><Lock />Upgrade Plan</Button>
         }
 
       </div>
