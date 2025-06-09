@@ -13,12 +13,12 @@ import CalltoAction from '@/components/CalltoAction'
 
 const page = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className='h-[1450px]'>
+    <div className=''>
 
       {/* navbar section ----------------------- */}
       <div className="border border-b">
         <nav className="flex justify-between items-center max-w-7xl mx-auto py-6">
-          <Link href="/" className='cursor-pointer'>  <Logo /></Link>
+         <Link href="/home" className='cursor-pointer'>  <Logo /></Link>
           <div className="flex items-center gap-4">
             <Link href="/sign-in"><Button className='text-xl tracking-wide bg-gradient-to-r from-blue-500 to-purple-600  '><span><ArrowRight size={32} /></span>Get Started</Button></Link>
             <DarkMode />
