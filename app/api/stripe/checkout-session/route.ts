@@ -5,16 +5,17 @@ import { NextResponse } from "next/server";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 export async function POST(req: Request) {
   const { price, userId, plan } = await req.json();
+  console.log(price,userId,plan)
 
   if (!userId) {
     return NextResponse.json({ error: "User not found" }, { status: 400 });
   }
                                                                                 
-  const successUrl = process.env.NEXT_PUBLIC_BASE_URL
-    ? `${process.env.NEXT_PUBLIC_BASE_URL}/success`
+  const successUrl = process.env.NEXTAUTH_URL
+    ? `${process.env.NEXTAUTH_URL}/success`
     : null;
-  const cancelUrl = process.env.NEXT_PUBLIC_BASE_URL
-    ? `${process.env.NEXT_PUBLIC_BASE_URL}/cancel`
+  const cancelUrl = process.env.NEXTAUTH_URL
+    ? `${process.env.NEXTAUTH_URL}/cancel`
     : null;
 
   if (!successUrl || !cancelUrl) {
@@ -30,7 +31,7 @@ export async function POST(req: Request) {
         {
           price_data: {
             currency: "usd",
-            unit_amount: price * 100,
+            unit_amount: Number(price) * 100,
             product_data: {
               name: `You are choosing ${plan} plan`,
             },
@@ -46,8 +47,9 @@ export async function POST(req: Request) {
       },
     });
     console.log("Stripe session ID (server):", session.id);
+    console.log("Stripe session ID (server):", session.url);
     return NextResponse.json(
-      { sessionId: session.id, url: session.url },
+      { sessionId: session?.id },
       
       { status: 200 }
     );

@@ -1,45 +1,63 @@
-import { NextRequest, NextResponse } from "next/server";
-import crypto from "crypto";
+import Stripe from "stripe";
+import { stripe } from "@/lib/stripe";
+import { userSubscription } from "@/actions/userSubscription";
+import { NextResponse } from 'next/server';
+ 
+const relevantEvents = new Set([
+  "checkout.session.completed",
+]);
 
-export async function POST(req: NextRequest) {
-  try {
-    const body = await req.text(); // Use `req.text()` instead of `req.body` in App Router
-    const webhookSecret = process.env.RAZORPAY_KEY_WEBHOOK!;
-    const razorpaySignature = req.headers.get("x-razorpay-signature") || "";
+export async function POST(req: Request) {
 
-    // Validate webhook signature
-    const expectedSignature = crypto
-      .createHmac("sha256", webhookSecret)
-      .update(body)
-      .digest("hex");
-
-    if (expectedSignature !== razorpaySignature) {
-      return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
-    }
-
-    const jsonBody = JSON.parse(body); // Parse the JSON body
-    const event = jsonBody.event;
-
-    switch (event) {
-      case "payment.captured":
-        // ✅ Store payment details in the database
-        break;
-
-      case "payment.failed":
-        // ✅ Handle failed payments (e.g., notify user)
-        break;
-
-      case "order.paid":
-        // ✅ Update order status in the database
-        break;
-
-      default:
-        return NextResponse.json({ error: "Unhandled event" }, { status: 400 });
-    }
-
-    return NextResponse.json({ success: true }, { status: 200 });
-  } catch (error) {
-    console.log(error)
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  if (!process.env.WEBHOOK_ENDPOINT_SECRET) {
+    throw new Error("WEBHOOK_ENDPOINT_SECRET is not set");
   }
+
+  const secret = process.env.WEBHOOK_ENDPOINT_SECRET!;
+  const payload = await req.text(); // Read the raw body as text
+  const sig = req.headers.get("stripe-signature") as string; // Retrieve the signature from headers
+
+  if (!sig) {
+    return NextResponse.json({ error: "Missing Stripe signature header" }, { status: 400 });
+  }
+
+  let event: Stripe.Event;
+
+  try {
+    // Verify and construct the event using the raw body, signature, and secret
+    event = stripe.webhooks.constructEvent(payload, sig, secret);
+  } catch (err) {
+    console.log(`Webhook signature verification failed.`, err);
+    return NextResponse.json(
+      { error: "Webhook signature verification failed" },
+      { status: 400 }
+    );
+  }
+
+  // Handle relevant Stripe events
+  if (relevantEvents.has(event.type)) {
+    try {
+      switch (event.type) {
+        case "checkout.session.completed": {
+          const session = event.data.object as Stripe.Checkout.Session; 
+          const userId = session.metadata?.userId as string;
+          // Call your function to create a subscription 
+          await userSubscription({ userId }); 
+          break;
+        }
+        default:
+          break;
+      }
+    } catch (error) {
+      console.log("Error processing event", error);
+      return NextResponse.json(
+        { error: `Error processing event ${event.type}` },
+        { status: 500 }
+      );
+    }
+  }
+
+  return NextResponse.json({ received: true }, { status: 200 });
 }
+
+ 
