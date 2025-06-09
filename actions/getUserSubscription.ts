@@ -1,3 +1,4 @@
+
 import prisma from "@/lib/prisma";
 
 export const getUserSubscription = async (userId:string) => {
@@ -8,7 +9,7 @@ export const getUserSubscription = async (userId:string) => {
     const subscription = await prisma.subscriptions.findFirst({
      where:{
          userId:userId
-     },
+     }
     });
  
     return subscription?.subscribed ? true : false;
