@@ -45,7 +45,7 @@ const PricingCard: React.FC<Props> = ({ userId }) => {
 
       const stripe = await getStripe();
 
-console.log("session id", sessionId)
+      console.log("session id", sessionId)
       stripe?.redirectToCheckout({ sessionId });
     } catch (error) {
       console.log(error);
