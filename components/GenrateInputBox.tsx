@@ -1,9 +1,9 @@
 "use client"
+import React, { ChangeEvent, useActionState, useEffect, useState } from "react";
 import { Lock, Sparkle } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useFormStatus } from "react-dom";
-import React, { ChangeEvent, useActionState, useEffect, useState } from "react";
 import { generateFroms } from "@/actions/generateForms";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -28,7 +28,7 @@ type Props = {
 
 const GenrateInputBox: React.FC<Props> = ({ text, totalForms, isSubscribed }) => {
 
-  const [description, setDescription] = useState<string | undefined>(text);
+  const [description, setDescription] = useState<string | undefined>("");
   const [state, formAction] = useActionState(generateFroms, initalState);
   const router = useRouter();
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -48,6 +48,8 @@ const GenrateInputBox: React.FC<Props> = ({ text, totalForms, isSubscribed }) =>
     }
   }, [router, state]);
 
+  console.log("isSubscribed:", isSubscribed);
+console.log("totalForms:", totalForms);
   return (
     <form action={formAction}>
       <div className="flex justify-center items-center gap-4 py-8">
@@ -60,10 +62,9 @@ const GenrateInputBox: React.FC<Props> = ({ text, totalForms, isSubscribed }) =>
           placeholder="Write a Prompt to Generate Forms....."
         />
 
-        {
-          isSubscribed || totalForms! <= MAX_FREE_FORM_TOKEN ? <SubmitButton /> :
-            <Button disabled className="h-12"><Lock />Upgrade Plan</Button>
-        }
+       {
+        isSubscribed && totalForms! <= MAX_FREE_FORM_TOKEN ? <SubmitButton /> : <Button disabled className="h-12"> <Lock/> Upgrade Plan</Button>
+      }
 
       </div>
     </form>

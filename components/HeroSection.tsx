@@ -16,6 +16,9 @@ const HeroSection:React.FC<Props> = ({totalForms, isSubscribed}) => {
     text: string;
   };
 
+
+
+
   const suggestedBtnText: SuggestionText[] = [
     {
       label: "Job Application",
@@ -47,8 +50,10 @@ const HeroSection:React.FC<Props> = ({totalForms, isSubscribed}) => {
         </div>
       </div>
 
+
       {/* input created */}
       <GenrateInputBox text={text} totalForms ={totalForms} isSubscribed ={isSubscribed} />
+      
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 items-center mt-6 px-4">
         {suggestedBtnText.map((item: SuggestionText, idx: number) => {

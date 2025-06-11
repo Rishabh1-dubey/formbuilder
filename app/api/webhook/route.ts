@@ -1,3 +1,4 @@
+"use server"
 import Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 import { userSubscription } from "@/actions/userSubscription";
@@ -40,7 +41,7 @@ export async function POST(req: Request) {
       switch (event.type) {
         case "checkout.session.completed": {
           const session = event.data.object as Stripe.Checkout.Session; 
-          const userId = session.metadata?.userId as string;
+          const userId = session.metadata?.userId as string
           // Call your function to create a subscription 
           await userSubscription({ userId }); 
           break;

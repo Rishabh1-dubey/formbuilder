@@ -47,6 +47,7 @@ export async function POST(req: Request) {
       },
     });
     
+    console.log("session.metadata.userId", session?.metadata?.userId);
     return NextResponse.json(
       { sessionId: session?.id },
       

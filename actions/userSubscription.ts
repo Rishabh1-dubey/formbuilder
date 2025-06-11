@@ -2,7 +2,8 @@
 import prisma from "../lib/prisma";
 
 export const userSubscription = async ({userId}:{userId:string}) => {
- 
+ console.log("userSubscriptioni ks userid", userId)
+
   const subscription = await prisma.subscriptions.create({
     data:{
         userId,
@@ -11,6 +12,7 @@ export const userSubscription = async ({userId}:{userId:string}) => {
         updatedAt: new Date()
     }
   });
+
 
   return subscription;
 }

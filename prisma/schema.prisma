@@ -36,7 +36,7 @@ model Submissions {
 model Subscriptions {
   id        Int @id @default(autoincrement())
   userId     String
-  subscribed Boolean
+  subscribed Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
