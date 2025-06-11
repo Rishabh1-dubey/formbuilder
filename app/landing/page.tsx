@@ -7,7 +7,7 @@ import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 
-const page = ({ children }: { children: React.ReactNode }) => {
+const page = () => {
   return (
     <div>
 

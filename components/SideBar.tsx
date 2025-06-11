@@ -49,7 +49,7 @@ const DashboardSidebar = async () => {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="flex items-center justify-between">
-            <Link href={"/"} className="font-bold text-lg">
+            <Link href={"/home"} className="font-bold text-lg">
               <Logo/>
             </Link>
           </SidebarGroupLabel>

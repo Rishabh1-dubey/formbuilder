@@ -6,12 +6,10 @@ import Logo from '@/components/ui/Logo'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
-import HeroSection from '@/components/HeroSection'
-import GenrateInputBox from '@/components/GenrateInputBox'
-import Footer from '@/components/Footer'
+
 import CalltoAction from '@/components/CalltoAction'
 
-const page = ({ children }: { children: React.ReactNode }) => {
+const page = () => {
   return (
     <div className=''>
 

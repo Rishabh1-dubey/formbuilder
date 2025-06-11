@@ -46,8 +46,7 @@ export async function POST(req: Request) {
         userId: userId as string,
       },
     });
-    console.log("Stripe session ID (server):", session.id);
-    console.log("Stripe session ID (server):", session.url);
+    
     return NextResponse.json(
       { sessionId: session?.id },
       

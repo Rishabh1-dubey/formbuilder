@@ -24,7 +24,7 @@ const HowItwork = () => {
   return (
     <div><div className='w-9/12 mx-auto'>
 
-                <h1 className='font-bold text-6xl capitalize tracking-tight py-4 text-center border-b'>How It's works</h1>
+                <h1 className='font-bold text-6xl capitalize tracking-tight py-4 text-center border-b'>How It &apos; s works</h1>
 
                 <div className='flex  flex-col md:flex-row  justify-around mt-6'>
                     {

@@ -6,8 +6,6 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from 'react-hot-toast';
 import { ThemeProvider } from "@/components/theme-provider";
-import GenrateInputBox from "@/components/GenrateInputBox";
-import Navbar from "@/components/Navbar";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
