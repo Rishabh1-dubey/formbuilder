@@ -1,5 +1,8 @@
 "use server"
-import prisma from "../lib/prisma";
+
+import prisma from "@/lib/prisma";
+
+
 
 export const userSubscription = async ({userId}:{userId:string}) => {
  console.log("userSubscriptioni ks userid", userId)

@@ -17,6 +17,7 @@ const HomePage =  async () => {
   const totalNumberOfFormCreated = forms?.data?.length || 0 as number;
  
   const isSubscribed = await getUserSubscription(user?.id as string) as boolean
+  console.log("Just Checking the hero section form subscribed or not", isSubscribed)
 
   return (
     <div className='grid items-center justify-items-center min-h-screen p-8 gap-16 sm:p-20'>

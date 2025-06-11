@@ -44,6 +44,7 @@ export async function POST(req: Request) {
           const userId = session.metadata?.userId as string
           // Call your function to create a subscription 
           await userSubscription({ userId }); 
+          console.log("🔥 Webhook fired. Subscribing user:", userId);
           break;
         }
         default:
