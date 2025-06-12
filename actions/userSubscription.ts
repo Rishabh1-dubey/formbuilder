@@ -1,22 +1,19 @@
-"use server"
+import prisma from "@/lib/prisma"
+import { date } from "zod"
 
-import prisma from "@/lib/prisma";
-
-
-
-export const userSubscription = async ({userId}:{userId:string}) => {
- console.log("userSubscriptioni ks userid", userId)
-
-  const subscription = await prisma.subscriptions.create({
-    data:{
-        userId,
-        subscribed:true,
-        createdAt:new Date(),
-        updatedAt: new Date()
-    }
-  });
+export const userSubscription = async({userId}:{userId:string})=>{
 
 
-  return subscription;
+const subscription = await prisma.subscriptions.create({
+  data:{
+    userId,
+    subscribed:true,
+    createdAt:new Date(),
+    updatedAt:new Date()
+  }
+})
+ 
+
+return subscription;
+
 }
-

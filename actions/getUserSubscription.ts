@@ -1,19 +1,14 @@
-"use server"
 import prisma from "@/lib/prisma";
 
-export const getUserSubscription = async (userId:string) => {
-    // fetch the subscription for the given user id
+export const getUserSubscription = async (userId: string) => {
+  if (!userId) {
+    throw new Error("Not Authenticated");
+  }
 
-    console.log("Checking the user Id:::",userId)
-    if(!userId){
-     throw new Error("User not authenticated")
-    }
-    const subscriptions = await prisma.subscriptions.findFirst({
-     where:{
-         userId:userId
-     },
-    });
-  
-
-    return subscriptions?.subscribed ? true : false;
- }
+  const subscription = await prisma.subscriptions.findFirst({
+    where: {
+      userId: userId,
+    },
+  });
+  return subscription?.subscribed ? true : false;
+};
