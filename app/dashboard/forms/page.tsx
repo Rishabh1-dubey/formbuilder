@@ -1,4 +1,5 @@
 import { getForms } from "@/actions/getForm";
+import { getUserSubscription } from "@/actions/getUserSubscription";
 import { FromList } from "@/components/FormList";
 import GenrateInputBox from "@/components/GenrateInputBox";
 import { Button } from "@/components/ui/button";
@@ -11,11 +12,24 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Form } from "@/types/form";
+import { currentUser } from "@clerk/nextjs/server";
 import { Plus } from "lucide-react";
+import { redirect } from "next/navigation";
 
 const MyForm = async () => {
+
+
+const user = await currentUser();
+  // console.log("Checkinhg user:",user)
+  if(!user){
+    redirect("/sign-in");
+  }
+
+
   const forms : any = await getForms();
   
+
+   const isSubscribed = await getUserSubscription(user?.id as string) as boolean
 
   return (
     <div className="">
@@ -36,7 +50,7 @@ const MyForm = async () => {
                   Write a clean prompt to get better results
                 </DialogDescription>
               </DialogHeader>
-              <GenrateInputBox/>
+              <GenrateInputBox isSubscribed ={isSubscribed}/>
             </DialogContent>
           </Dialog>
         </section>

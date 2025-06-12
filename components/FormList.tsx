@@ -48,7 +48,7 @@ export const FromList: React.FC<Props> = ({ form }) => {
           <Link href={`/dashboard/forms/${form.id}/submissions`}>
             {""}
             <Button variant={"link"} className="text-black hover:text-blue-600 dark:text-white">
-              Submission - {form.submissions}{" "}
+              Submission - {form.submissions ?? 0}{" "}
             </Button>
           </Link>
         </CardContent>
