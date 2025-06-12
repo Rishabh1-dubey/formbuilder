@@ -1,9 +1,10 @@
 import Stripe from "stripe";
-
 import { NextResponse } from "next/server";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 export async function POST(req: Request) {
+
+  
   const { price, userId, plan } = await req.json();
   console.log(price,userId,plan)
 
@@ -49,7 +50,7 @@ export async function POST(req: Request) {
     
     console.log("session.metadata.userId", session?.metadata?.userId);
     return NextResponse.json(
-      { sessionId: session?.id },
+      { sessionId: session?.id,url:session?.url },
       
       { status: 200 }
     );
