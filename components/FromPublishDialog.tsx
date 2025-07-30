@@ -19,7 +19,12 @@ type Props = {
 };
 const FromPublishDialog: React.FC<Props> = ({ formId, open, onOpenChange }) => {
 
-  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ||"http://localhost:3000"  
+
+  // took the help of chatgpt to solve this logicc
+  const isProduction = process.env.NODE_ENV === "production";
+  const BASE_URL = isProduction
+    ? process.env.NEXT_PUBLIC_BASE_URL  // Your deployed domain (e.g., https://myapp.com)
+    : "http://localhost:3000"; 
 
 
 
