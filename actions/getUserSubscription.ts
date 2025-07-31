@@ -8,8 +8,8 @@ export const getUserSubscription = async (userId: string) => {
 
   const subscription = await prisma.subscriptions.findFirst({
     where: {
-      userId: userId,
-    },
+      userId: userId
+    }
   });
   return subscription?.subscribed ? true : false;
 };

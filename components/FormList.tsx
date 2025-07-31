@@ -25,12 +25,16 @@ export const FromList: React.FC<Props> = ({ form }) => {
 
 
   const deleteHandle = async (formId: number) => {
-    const data = await deleteForm(formId);
+    try {
+      const data = await deleteForm(formId);
 
     if (data.success) {
       toast.success(data.message);
     } else {
       toast.error(data.message);
+    }
+    } catch (error) {
+      console.log("somehthing went wrong formList file error",error)
     }
   };
 
