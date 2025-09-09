@@ -3,21 +3,14 @@ import { NextResponse } from "next/server";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 export async function POST(req: Request) {
-
-  
   const { price, userId, plan } = await req.json();
-  console.log(price,userId,plan)
+  console.log(price, userId, plan);
 
   if (!userId) {
     return NextResponse.json({ error: "User not found" }, { status: 400 });
   }
-                                                                                
-  const successUrl = process.env.NEXTAUTH_URL
-    ? `${process.env.NEXTAUTH_URL}/success`
-    : null;
-  const cancelUrl = process.env.NEXTAUTH_URL
-    ? `${process.env.NEXTAUTH_URL}/cancel`
-    : null;
+  const successUrl = `${process.env.NEXTAUTH_URL}/success`;
+  const cancelUrl = `${process.env.NEXTAUTH_URL}/cancel`;
 
   if (!successUrl || !cancelUrl) {
     return NextResponse.json(
@@ -47,11 +40,11 @@ export async function POST(req: Request) {
         userId: userId as string,
       },
     });
-    
+
     console.log("session.metadata.userId", session?.metadata?.userId);
     return NextResponse.json(
-      { sessionId: session?.id,url:session?.url },
-      
+      { sessionId: session?.id, url: session?.url },
+
       { status: 200 }
     );
   } catch (error) {
@@ -59,6 +52,6 @@ export async function POST(req: Request) {
     return NextResponse.json(
       { error: "Failed to create checkout session" },
       { status: 500 }
-    )
+    );
   }
 }

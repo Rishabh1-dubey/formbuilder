@@ -63,7 +63,7 @@ console.log("totalForms:", totalForms);
         />
 
        {
-        isSubscribed || totalForms! <= MAX_FREE_FORM_TOKEN ? <SubmitButton /> : <Button disabled className="h-12"> <Lock/> Upgrade Plan</Button>
+        isSubscribed || totalForms! < MAX_FREE_FORM_TOKEN ? <SubmitButton /> : <Button disabled className="h-12"> <Lock/> Upgrade Plan</Button>
       }
 
       </div>
