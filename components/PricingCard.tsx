@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -14,12 +14,17 @@ import { PricingPlan, pricingPlan } from "@/lib/pricingPlan";
 import { Badge } from "./ui/badge";
 import { useRouter } from "next/navigation";
 import { getStripe } from "@/lib/stripe-client";
+import { Flashlight, Loader, Loader2 } from "lucide-react";
+import { Item } from "@radix-ui/react-dropdown-menu";
+import { string } from "zod";
 
 type Props = {
   userId: string | undefined;
 };
 
 const PricingCard: React.FC<Props> = ({ userId }) => {
+  const [loading, setLoading] = useState<string | null>(null)
+
   const router = useRouter();
 
   const checkoutHandler = async (price: number, plan: string) => {
@@ -31,6 +36,7 @@ const PricingCard: React.FC<Props> = ({ userId }) => {
       return;
     }
 
+    setLoading(plan)
     try {
       const { sessionId } = await fetch("/api/stripe/checkout-session", {
         method: "POST",
@@ -39,16 +45,15 @@ const PricingCard: React.FC<Props> = ({ userId }) => {
         },
         body: JSON.stringify({ price, userId, plan }),
       }).then((res) => res.json());
-
-
-
-
       const stripe = await getStripe();
 
-      console.log("session id", sessionId)
+      // console.log("session id", sessionId)
       stripe?.redirectToCheckout({ sessionId });
+     
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(null)
     }
   };
 
@@ -102,6 +107,7 @@ const PricingCard: React.FC<Props> = ({ userId }) => {
                     ? "bg-white text-black font-medium"
                     : null
                     }  w-full`}
+                    //  disabled={loading!== null}
                   onClick={() =>
                     checkoutHandler(
                       item.level === "Pro"
@@ -113,7 +119,10 @@ const PricingCard: React.FC<Props> = ({ userId }) => {
                     )
                   }
                 >
-                  Start With {item.level}
+                  {
+                    loading === item.level ? <Loader2 className="animate-spin" /> : <>Start With {item.level}</>
+                  }
+
                 </Button>
               </CardFooter>
             </Card>

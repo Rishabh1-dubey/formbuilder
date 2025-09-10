@@ -8,11 +8,13 @@ import FromPublishDialog from "./FromPublishDialog";
 import { Fields } from "@/types/form";
 import { submitForm } from "@/actions/submitForms";
 import toast from "react-hot-toast";
+import { Loader2 } from "lucide-react";
 
 type Props = { form: any; isEditMode: boolean };
 
 const AiGenratedform: React.FC<Props> = ({ form, isEditMode }) => {
   const [successDialogOpne, setSuccessDialogOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false)
 
   const [formData, setFormData] = useState<any>({});
 
@@ -26,6 +28,7 @@ const AiGenratedform: React.FC<Props> = ({ form, isEditMode }) => {
     if (isEditMode) {
       await publishform(form.id);
       setSuccessDialogOpen(true);
+      setLoading(true)
     }
   };
 
@@ -33,35 +36,32 @@ const AiGenratedform: React.FC<Props> = ({ form, isEditMode }) => {
     e.preventDefault();
     const data = await submitForm(form.id, formData);
 
-    if(data?.success){
+    if (data?.success) {
       toast.success(data.message);
       setFormData({});
     }
-    if(!data?.success){
+    if (!data?.success) {
       toast.error(data?.message);
     }
   };
-  
+
   const value =
-  typeof form.content !== "object"
-  ? JSON.parse(form.content as any)
-  : form.content;
+    typeof form.content !== "object"
+      ? JSON.parse(form.content as any)
+      : form.content;
   let data;
-  
+
   if (typeof value === "object" && form !== null && !Array.isArray(value)) {
     data = value.formFields;
   } else {
     data = value[0].formFields;
   }
 
-  
-
-  
   return (
     <div>
       <form onSubmit={isEditMode ? handlePublish : handleSubmit}>
         {data.map((item: Fields, index: number) => {
-        
+
           return (
             <div key={index} className="mb-4">
               <Label>{item.label}</Label>
@@ -76,7 +76,7 @@ const AiGenratedform: React.FC<Props> = ({ form, isEditMode }) => {
             </div>
           );
         })}
-        <Button type="submit">{isEditMode ? "publish" : "submit"}</Button>
+        <Button type="submit">{loading ? <Loader2 className="animate-spin h-6 w-5" /> : isEditMode ? "publish" : "submit"}</Button>
       </form>
       <FromPublishDialog
         formId={form.id}

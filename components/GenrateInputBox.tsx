@@ -48,8 +48,8 @@ const GenrateInputBox: React.FC<Props> = ({ text, totalForms, isSubscribed }) =>
     }
   }, [router, state]);
 
-  console.log("isSubscribed:", isSubscribed);
-console.log("totalForms:", totalForms);
+//   console.log("isSubscribed:", isSubscribed);
+// console.log("totalForms:", totalForms);
   return (
     <form action={formAction}>
       <div className="flex justify-center items-center gap-4 py-8">

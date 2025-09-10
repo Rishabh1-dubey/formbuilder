@@ -1,5 +1,5 @@
 "use client"
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -19,6 +19,7 @@ type Props = {
 };
 const FromPublishDialog: React.FC<Props> = ({ formId, open, onOpenChange }) => {
 
+ 
 
   // took the help of chatgpt to solve this logicc
   const isProduction = process.env.NODE_ENV === "production";
@@ -32,6 +33,7 @@ const FromPublishDialog: React.FC<Props> = ({ formId, open, onOpenChange }) => {
     const link = `${BASE_URL}/forms/${formId}`;
     navigator.clipboard.writeText(link);
     toast.success('Copied to clipboard')
+ 
   }
   return (
     <div>
@@ -57,7 +59,7 @@ const FromPublishDialog: React.FC<Props> = ({ formId, open, onOpenChange }) => {
                 className="w-full  bg-gray-100 dark:bg-gray-800"
                 value={`${BASE_URL}/forms/edit/${formId}`}
               />
-                <Button onClick={copyClipboard}>Copy</Button>
+                <Button onClick={copyClipboard} className="hover:bg-gray-400">Copy</Button>
             </div>
           </div>
         </DialogContent>

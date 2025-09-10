@@ -20,7 +20,7 @@ const MyForm = async () => {
 
 
 const user = await currentUser();
-  console.log("Checkinhg user:",user?.id && user.username && user.emailAddresses)
+  // console.log("Checkinhg user:",user?.id && user.username && user.emailAddresses)
   if(!user){
     redirect("/sign-in");
   }

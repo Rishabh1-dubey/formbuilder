@@ -10,7 +10,7 @@ const HeroLanding = () => {
     const handleClick = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         toast.success("Email send successfully")
-        console.log("checking email", email)
+        // console.log("checking email", email)
         setEmail("")
     }
 

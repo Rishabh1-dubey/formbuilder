@@ -17,7 +17,7 @@ const SubmitForm = async ({params,}: {params: Promise<{ formId: string }>}) => {
           },
         });
   return (
-    <Card className='max-w-xl mx-auto py-10'>
+    <Card className='max-w-xl mx-auto relative top-20  py-7'>
     <CardHeader>
       <CardTitle>
         <h1 className="text-2xl text-center">{form.content?.formTitle}</h1>

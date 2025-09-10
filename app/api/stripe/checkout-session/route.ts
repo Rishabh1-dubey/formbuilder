@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 export async function POST(req: Request) {
   const { price, userId, plan } = await req.json();
-  console.log(price, userId, plan);
+
 
   if (!userId) {
     return NextResponse.json({ error: "User not found" }, { status: 400 });
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
       },
     });
 
-    console.log("session.metadata.userId", session?.metadata?.userId);
+
     return NextResponse.json(
       { sessionId: session?.id, url: session?.url },
 

@@ -13,7 +13,7 @@ type Props = {
 const UpgradeButton : React.FC<Props> = async ({userId}) => {
   const forms = await getForms(); 
   const isSubscribed = await getUserSubscription(userId!)
-  console.log("checking the upgrade button of mer",userId)
+  // console.log("checking the upgrade button of mer",userId)
 
 
   const formsGenerated = forms?.data?.length;

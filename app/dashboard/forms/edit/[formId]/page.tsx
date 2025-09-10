@@ -19,11 +19,13 @@ const editPage = async ({
   });
   
 
+  console.log(form?.content)
   return (
     <Card>
       <CardHeader>
         <CardTitle>
           <h1 className="text-2xl text-center">{form.content?.formTitle}</h1>
+          
         </CardTitle>
       </CardHeader>
       <CardContent>
